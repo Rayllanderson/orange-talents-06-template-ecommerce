@@ -24,7 +24,7 @@ public class SaveUserController {
     @PostMapping
     @Transactional
     public ResponseEntity<?> save(@RequestBody @Valid UserPostRequest request){
-        User userToBeSaved = request.toModel(new BCryptPasswordEncoder());
+        User userToBeSaved = request.toModel();
         manager.persist(userToBeSaved);
         return ResponseEntity.ok().build();
     }

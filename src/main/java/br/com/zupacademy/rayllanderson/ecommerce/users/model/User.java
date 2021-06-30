@@ -1,5 +1,7 @@
 package br.com.zupacademy.rayllanderson.ecommerce.users.model;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,8 +30,12 @@ public class User {
     @Deprecated
     private User() {}
 
+    /**
+     * @param login precisa vir em formato de email válido.
+     * @param password precisa vir em texto limpo.
+     */
     public User(String login, String password) {
         this.login = login;
-        this.password = password;
+        this.password = new BCryptPasswordEncoder().encode(password);
     }
 }
