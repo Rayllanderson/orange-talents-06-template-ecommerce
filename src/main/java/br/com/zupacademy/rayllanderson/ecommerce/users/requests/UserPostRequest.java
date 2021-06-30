@@ -1,7 +1,6 @@
 package br.com.zupacademy.rayllanderson.ecommerce.users.requests;
 
 import br.com.zupacademy.rayllanderson.ecommerce.users.model.User;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -20,7 +19,7 @@ public class UserPostRequest {
         this.password = password;
     }
 
-    public User toModel(PasswordEncoder encoder){
-        return new User(login, encoder.encode(password));
+    public User toModel(){
+        return new User(login, password);
     }
 }
