@@ -81,4 +81,8 @@ public class Product {
     public void addReview(Review review){
         this.reviews.add(review);
     }
+
+    public User getOwner() {
+        return owner;
+    }
 }
