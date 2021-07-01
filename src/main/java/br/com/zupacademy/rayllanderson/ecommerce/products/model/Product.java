@@ -4,6 +4,7 @@ import br.com.zupacademy.rayllanderson.ecommerce.categories.model.Category;
 import br.com.zupacademy.rayllanderson.ecommerce.products.characters.model.Character;
 import br.com.zupacademy.rayllanderson.ecommerce.products.characters.requests.CharacterRequest;
 import br.com.zupacademy.rayllanderson.ecommerce.products.images.model.Image;
+import br.com.zupacademy.rayllanderson.ecommerce.products.reviews.model.Review;
 import br.com.zupacademy.rayllanderson.ecommerce.users.model.User;
 
 import javax.persistence.*;
@@ -42,6 +43,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
     private final Set<Image> images = new HashSet<>();
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
+    private final Set<Review> reviews = new HashSet<>();
+
     @NotNull
     @ManyToOne
     private User owner;
@@ -72,5 +76,9 @@ public class Product {
      */
     public void addAndAssignImages(Set<String> links) {
         this.images.addAll(links.stream().map(link -> new Image(link, this)).collect(Collectors.toSet()));
+    }
+
+    public void addReview(Review review){
+        this.reviews.add(review);
     }
 }
