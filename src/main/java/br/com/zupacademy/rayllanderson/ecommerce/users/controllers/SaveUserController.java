@@ -3,7 +3,6 @@ package br.com.zupacademy.rayllanderson.ecommerce.users.controllers;
 import br.com.zupacademy.rayllanderson.ecommerce.users.model.User;
 import br.com.zupacademy.rayllanderson.ecommerce.users.requests.UserPostRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
