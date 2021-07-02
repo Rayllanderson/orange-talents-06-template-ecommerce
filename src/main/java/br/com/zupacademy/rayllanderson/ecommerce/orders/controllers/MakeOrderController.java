@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
@@ -30,7 +31,8 @@ public class MakeOrderController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<?> makeAnOrder(@RequestBody @Valid OrderPostRequest request, @AuthenticationPrincipal User user) {
+    public ResponseEntity<?> makeAnOrder(@RequestBody @Valid OrderPostRequest request, @AuthenticationPrincipal User user,
+                                         UriComponentsBuilder uriComponentsBuilder) {
         Product selectedProduct = manager.find(Product.class, request.getProductId());
         if (selectedProduct == null) return ResponseEntity.notFound().build();
 
@@ -43,7 +45,7 @@ public class MakeOrderController {
             manager.persist(order);
             emailSender.sendOrderEmail(order);
 
-            return ResponseEntity.status(302).body(order.getReturnUrl());
+            return ResponseEntity.status(302).body(order.getReturnUrl(uriComponentsBuilder));
         }
 
         return ResponseEntity.badRequest().body("Não há estoque disponível para esta quantidade: " + quantity);

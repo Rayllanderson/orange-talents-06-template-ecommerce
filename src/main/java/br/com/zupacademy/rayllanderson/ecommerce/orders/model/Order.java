@@ -4,6 +4,7 @@ import br.com.zupacademy.rayllanderson.ecommerce.orders.enums.OrderStatus;
 import br.com.zupacademy.rayllanderson.ecommerce.orders.enums.PaymentGateway;
 import br.com.zupacademy.rayllanderson.ecommerce.products.model.Product;
 import br.com.zupacademy.rayllanderson.ecommerce.users.model.User;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -19,25 +20,28 @@ public class Order {
 
     @NotNull @Positive @Min(1)
     @Column(nullable = false)
-    private final Integer quantity;
+    private Integer quantity;
 
     @NotNull
     @Column(nullable = false)
-    private final Double price;
+    private Double price;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.MERGE)
-    private final Product selectedProduct;
+    private Product selectedProduct;
 
     @NotNull
     @ManyToOne
-    private final User buyer;
+    private User buyer;
 
     @Enumerated
-    private final PaymentGateway paymentGateway;
+    private PaymentGateway paymentGateway;
 
     @Enumerated
     private OrderStatus status = OrderStatus.STARTED;
+
+    @Deprecated
+    private Order(){}
 
     public Order(Integer quantity, Product selectedProduct, User buyer, PaymentGateway paymentGateway) {
         this.quantity = quantity;
@@ -55,15 +59,31 @@ public class Order {
         return buyer.getId();
     }
 
-    public String getReturnUrl() {
-        return this.paymentGateway.getReturnUrl(this);
+    public Long getSellerId() {
+        return this.getSeller().getId();
+    }
+
+    public String getReturnUrl(UriComponentsBuilder uriComponentsBuilder) {
+        return this.paymentGateway.getReturnUrl(this,uriComponentsBuilder);
     }
 
     public User getSeller(){
         return this.selectedProduct.getOwner();
     }
 
+    public User getBuyer(){
+        return this.buyer;
+    }
+
     public String getProductName(){
         return this.selectedProduct.getName();
+    }
+
+    public void finish(){
+        this.status = OrderStatus.FINISHED;
+    }
+
+    public boolean hasSuccessfullyProcessed(){
+        return this.status.equals(OrderStatus.FINISHED);
     }
 }
