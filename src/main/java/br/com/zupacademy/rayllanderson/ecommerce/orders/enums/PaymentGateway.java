@@ -1,24 +1,27 @@
 package br.com.zupacademy.rayllanderson.ecommerce.orders.enums;
 
 import br.com.zupacademy.rayllanderson.ecommerce.orders.model.Order;
+import org.springframework.web.util.UriComponentsBuilder;
 
 public enum PaymentGateway {
     PAYPAL{
         @Override
-        public String getReturnUrl(Order order){
+        public String getReturnUrl(Order order, UriComponentsBuilder uriComponentsBuilder){
             Long buyerId = order.getBuyerId();
             Long orderId = order.getId();
-            return "paypal.com?buyerId=" + buyerId + "&redirectUrl=" + "https://paypal/api/ray-api/orders/" + orderId;
+            String redirectUrl = uriComponentsBuilder.path("/paypal-orders/{id}").buildAndExpand(orderId).toString();
+            return "paypal.com?buyerId=" + buyerId + "&redirectUrl=" + redirectUrl;
         }
     },
     PAG_SEGURO{
         @Override
-        public String getReturnUrl(Order order){
+        public String getReturnUrl(Order order, UriComponentsBuilder uriComponentsBuilder){
             Long buyerId = order.getBuyerId();
             Long orderId = order.getId();
-            return "pagseguro.com?buyerId=" + buyerId + "&redirectUrl=" + "https://pagseguro/api/ray-api/orders/" + orderId;
+            String redirectUrl = uriComponentsBuilder.path("/pagseguro-orders/{id}").buildAndExpand(orderId).toString();
+            return "pagseguro.com?buyerId=" + buyerId + "&redirectUrl=" + redirectUrl;
         }
     };
 
-    public abstract String getReturnUrl(Order order);
+    public abstract String getReturnUrl(Order order, UriComponentsBuilder uriComponentsBuilder);
 }
