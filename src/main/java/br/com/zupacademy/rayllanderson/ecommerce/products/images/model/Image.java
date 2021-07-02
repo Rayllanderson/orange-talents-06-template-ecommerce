@@ -30,4 +30,8 @@ public class Image {
         this.url = url;
         this.product = product;
     }
+
+    public String getUrl() {
+        return url;
+    }
 }

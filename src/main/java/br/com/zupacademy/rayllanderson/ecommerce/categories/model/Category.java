@@ -29,4 +29,8 @@ public class Category {
     public void setMotherCategory(Category motherCategory) {
         this.motherCategory = motherCategory;
     }
+
+    public String getName() {
+        return name;
+    }
 }
