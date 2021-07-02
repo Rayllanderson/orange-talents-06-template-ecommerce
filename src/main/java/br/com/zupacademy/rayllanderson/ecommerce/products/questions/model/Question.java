@@ -6,6 +6,7 @@ import br.com.zupacademy.rayllanderson.ecommerce.users.model.User;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Entity
 public class Question {
@@ -25,6 +26,9 @@ public class Question {
     @NotNull
     @ManyToOne
     private Product product;
+
+    @NotNull
+    private LocalDateTime createdIn = LocalDateTime.now();
 
     @Deprecated
     private Question(){}

@@ -3,7 +3,7 @@ package br.com.zupacademy.rayllanderson.ecommerce.products.questions.controllers
 import br.com.zupacademy.rayllanderson.ecommerce.products.model.Product;
 import br.com.zupacademy.rayllanderson.ecommerce.products.questions.model.Question;
 import br.com.zupacademy.rayllanderson.ecommerce.products.questions.requests.QuestionPostRequest;
-import br.com.zupacademy.rayllanderson.ecommerce.products.questions.services.EmailSender;
+import br.com.zupacademy.rayllanderson.ecommerce.services.email.EmailSender;
 import br.com.zupacademy.rayllanderson.ecommerce.users.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
