@@ -33,4 +33,12 @@ public class Character {
         this.description = description;
         this.product = product;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

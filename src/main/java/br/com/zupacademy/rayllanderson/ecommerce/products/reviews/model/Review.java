@@ -42,4 +42,16 @@ public class Review {
         this.userWhoMadeReview = user;
         this.product = product;
     }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

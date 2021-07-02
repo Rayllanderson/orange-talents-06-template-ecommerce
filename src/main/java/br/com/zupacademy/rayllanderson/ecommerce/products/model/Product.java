@@ -4,13 +4,16 @@ import br.com.zupacademy.rayllanderson.ecommerce.categories.model.Category;
 import br.com.zupacademy.rayllanderson.ecommerce.products.characters.model.Character;
 import br.com.zupacademy.rayllanderson.ecommerce.products.characters.requests.CharacterRequest;
 import br.com.zupacademy.rayllanderson.ecommerce.products.images.model.Image;
+import br.com.zupacademy.rayllanderson.ecommerce.products.questions.model.Question;
 import br.com.zupacademy.rayllanderson.ecommerce.products.reviews.model.Review;
+import br.com.zupacademy.rayllanderson.ecommerce.products.reviews.utils.ReviewsCalculator;
 import br.com.zupacademy.rayllanderson.ecommerce.users.model.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Entity
@@ -46,6 +49,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
     private final Set<Review> reviews = new HashSet<>();
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
+    private final Set<Question> questions = new HashSet<>();
+
     @NotNull
     @ManyToOne
     private User owner;
@@ -67,6 +73,7 @@ public class Product {
         this.category = category;
         charactersRequest.forEach(request -> this.characters.add(request.toModel(this)));
     }
+
     public boolean belongToThatUser(User user){
         return this.owner.equals(user);
     }
@@ -84,5 +91,45 @@ public class Product {
 
     public User getOwner() {
         return owner;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getCategoryName() {
+        return category.getName();
+    }
+
+    public ReviewsCalculator getReviewsCalculator(){
+        return new ReviewsCalculator(this.reviews);
+    }
+
+    public <T> Set<T> mapCharacters(Function<Character, T> mapFunction){
+        return this.characters.stream().map(mapFunction).collect(Collectors.toSet());
+    }
+
+    public <T> Set<T> mapImages(Function<Image, T> mapFunction){
+        return this.images.stream().map(mapFunction).collect(Collectors.toSet());
+    }
+
+    public <T> Set<T> mapQuestions(Function<Question, T> mapFunction){
+        return this.questions.stream().map(mapFunction).collect(Collectors.toSet());
+    }
+
+    public <T> Set<T> mapReviews(Function<Review, T> mapFunction){
+        return this.reviews.stream().map(mapFunction).collect(Collectors.toSet());
     }
 }
