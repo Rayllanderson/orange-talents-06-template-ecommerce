@@ -8,6 +8,7 @@ import br.com.zupacademy.rayllanderson.ecommerce.products.questions.model.Questi
 import br.com.zupacademy.rayllanderson.ecommerce.products.reviews.model.Review;
 import br.com.zupacademy.rayllanderson.ecommerce.products.reviews.utils.ReviewsCalculator;
 import br.com.zupacademy.rayllanderson.ecommerce.users.model.User;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -132,4 +133,21 @@ public class Product {
     public <T> Set<T> mapReviews(Function<Review, T> mapFunction){
         return this.reviews.stream().map(mapFunction).collect(Collectors.toSet());
     }
+
+    private boolean hasStockFor(int quantity){
+        return this.quantity > 0 && this.quantity >= quantity;
+    }
+
+    private void reduceFromStock(int quantity){
+        this.quantity -= quantity;
+    }
+
+    public boolean checkIfHasStockThenReduceFromStock(int quantity){
+        if (hasStockFor(quantity)){
+            reduceFromStock(quantity);
+            return true;
+        }
+        return false;
+    }
+
 }

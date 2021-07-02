@@ -50,6 +50,10 @@ public class User implements UserDetails {
         this.roles = "ROLE_USER";
     }
 
+    public Long getId() {
+        return id;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(roles == null) return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));

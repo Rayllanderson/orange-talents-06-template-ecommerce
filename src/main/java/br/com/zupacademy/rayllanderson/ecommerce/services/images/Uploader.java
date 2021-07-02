@@ -1,4 +1,4 @@
-package br.com.zupacademy.rayllanderson.ecommerce.products.images.services;
+package br.com.zupacademy.rayllanderson.ecommerce.services.images;
 
 import org.springframework.web.multipart.MultipartFile;
 

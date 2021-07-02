@@ -1,7 +1,7 @@
 package br.com.zupacademy.rayllanderson.ecommerce.products.images.controllers;
 
 import br.com.zupacademy.rayllanderson.ecommerce.products.images.requests.ImagePostRequest;
-import br.com.zupacademy.rayllanderson.ecommerce.products.images.services.Uploader;
+import br.com.zupacademy.rayllanderson.ecommerce.services.images.Uploader;
 import br.com.zupacademy.rayllanderson.ecommerce.products.model.Product;
 import br.com.zupacademy.rayllanderson.ecommerce.users.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
